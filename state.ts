@@ -1,4 +1,4 @@
-import { MenuContents } from "./types/menuTypes";
+import { Menu, MenuContents } from "./types/menuTypes";
 import { Units } from "./types/unitTypes";
 
 export const soldierMenuContents = [
@@ -12,7 +12,7 @@ export const soldierMenuContents = [
 
 export const initState = {
     stickFigureArmRaised: false as boolean,
-    menuContents: soldierMenuContents as MenuContents,
+    menu: {unitId:"Soldier3", contents: soldierMenuContents} as Menu,
     units: [
         { id:"StickMan1", side:"left", class:"StickMan"},
         { id:"Soldier2", side:"left", class:"Soldier"},

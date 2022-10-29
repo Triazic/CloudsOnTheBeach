@@ -140,7 +140,7 @@ const render = () => {
         }
     });
     drawHeading();
-    drawMenu(state.menuContents, 450, 605);
+    drawMenu(state.menu.contents, 450, 605);
     window.requestAnimationFrame(render);
 };
 let state = initState;
@@ -160,10 +160,11 @@ const getMouseOverMenuEntry = (mouseX, mouseY, menu, menuX, menuY) => {
     return menu.find((entry, i) => getIfEntryMouseOvered(i));
 };
 canvas.addEventListener('mousemove', e => {
-    const menuMouseOverEntry = getMouseOverMenuEntry(e.x, e.y, state.menuContents, 450, 605);
-    state.menuContents.forEach(entry => entry.highlighted = false);
+    const contents = state.menu.contents;
+    const menuMouseOverEntry = getMouseOverMenuEntry(e.x, e.y, contents, 450, 605);
+    contents.forEach(entry => entry.highlighted = false);
     if (menuMouseOverEntry) {
-        state.menuContents.find(entry => entry.name == menuMouseOverEntry.name).highlighted = true; // bad code, checking on name!
+        contents.find(entry => entry.name == menuMouseOverEntry.name).highlighted = true; // bad code, checking on name!
     }
 });
 window.requestAnimationFrame(render);
