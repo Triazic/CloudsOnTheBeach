@@ -37,17 +37,42 @@ const drawHeading = () => {
     ctx.font = "50px verdana";
     ctx.fillText("Clouds on the Beach...", 675, 250);
 };
+const drawMenuText = (x, y, message) => {
+    ctx.fillStyle = "white";
+    ctx.font = "25px verdana";
+    ctx.fillText(message, x, y);
+};
 const drawMenu = () => {
     const x = 450;
     const y = 605;
     const w = 140;
-    const h = w * 1.62;
+    const h = w * 1.62 - 20;
     // border
     ctx.fillStyle = "#6fa8de";
     ctx.fillRect(x, y, w, h);
     // interior
     ctx.fillStyle = "#1D5182";
     ctx.fillRect(x + 5, y + 5, w - 10, h - 10);
+    // text
+    let textY = y;
+    textY += 5;
+    textY += 30;
+    drawMenuText(x + 15, textY, "Retreat");
+    textY += 30;
+    drawMenuText(x + 15, textY, "Submit");
+    textY += 30;
+    drawMenuText(x + 15, textY, "Give Up");
+    // draw selected 'highlight'
+    {
+        ctx.fillStyle = "#6fa8de";
+        ctx.fillRect(x + 7.5, textY + 5, w - 15, 30);
+    }
+    textY += 30;
+    drawMenuText(x + 15, textY, "Despair");
+    textY += 30;
+    drawMenuText(x + 15, textY, "Flee");
+    textY += 30;
+    drawMenuText(x + 15, textY, "Bargain");
 };
 const drawASkeleton = (skeleton, origin, size) => {
     ctx.fillStyle = "black";
