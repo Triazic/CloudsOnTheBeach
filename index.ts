@@ -1,4 +1,5 @@
 import {skeleton, stickFigureDefault, stickFigureRightArmRaised, xy} from "./skeletons.js"
+import {initState, State} from "./state.js"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -90,7 +91,13 @@ const render = () => {
     drawACloud(1250+spacing, initHeight+spacing, 200, 200);
     drawACloud(1250+spacing*2, initHeight+spacing*2, 200, 200);
     const baseSoldierX = 550;
-    drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+
+    if (state.stickFigureArmRaised) {
+        drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+    }
+    else {
+        drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+    }
     drawASoldier(baseSoldierX-spacing, initHeight+spacing, 200, 200);
     drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200);
     drawHeading();
@@ -98,6 +105,8 @@ const render = () => {
     window.requestAnimationFrame(render);
 }
 
+let state = initState;
+setInterval(() => state.stickFigureArmRaised = !state.stickFigureArmRaised, 1000);
 window.requestAnimationFrame(render);
 
 export {}
