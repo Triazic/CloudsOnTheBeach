@@ -116,8 +116,8 @@ const render = () => {
     });
     const leftUnits = state.units.filter(u => u.side == "left");
     const baseSoldierX = 550;
-    const baseStickManX = 650;
-    const baseStickManY = 450;
+    const baseStickManX = 615;
+    const baseStickManY = 465;
     leftUnits.forEach((unit, i) => {
         if (unit.class != "StickMan" && unit.class != "Soldier")
             throw "expecting only soldiers or stick men on the left for now";
@@ -125,10 +125,10 @@ const render = () => {
             case "StickMan":
                 {
                     if (state.stickFigureArmRaised) {
-                        drawARightArmRaisedStickFigure([baseStickManX + spacing * i, baseStickManY + spacing * i]);
+                        drawARightArmRaisedStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i]);
                     }
                     else {
-                        drawADefaultStickFigure([baseStickManX + spacing * i, baseStickManY + spacing * i]);
+                        drawADefaultStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i]);
                     }
                 }
                 break;
