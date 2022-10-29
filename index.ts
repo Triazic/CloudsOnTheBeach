@@ -16,40 +16,43 @@ const fillAll = (colour:string) => {
     ctx.fillRect(0, 0, width, height);
 }
 
-const drawBeach = () => new Promise((resolve) => {
+const loadImage = (src:string) => new Promise<HTMLImageElement>((resolve) => {
     const img = new Image();
-    img.src = "/Beach.png";
+    img.src = src;
     img.onload = () => {
-        ctx.drawImage(
-            img, 0, 0, img.width,    img.height,    // source rectangle
-            0, 0, canvas.width, canvas.height       // destination rectangle
-        ); 
+        resolve(img);
     }
 });
 
-const drawACloud = (x:number, y:number, w?:number, h?:number) => new Promise((resolve) => {
-    const img = new Image();
-    img.src = "/Cloud.png";
-    img.onload = () => {
-        ctx.drawImage(
-            img, 0, 0, img.width,    img.height,    // source rectangle
-            x, y, w ?? 200, h ?? 200       // destination rectangle
-        );
-        resolve(null);
-    }
-});
+const beachImg = await loadImage("/Beach.png");
+const cloudImg = await loadImage("/Cloud.png");
+const soldierImg = await loadImage("/Enemy.png");
 
-const drawASoldier = (x:number, y:number, w?:number, h?:number) => new Promise((resolve) => {
-    const img = new Image();
-    img.src = "/Enemy.png";
-    img.onload = () => {
-        ctx.drawImage(
-            img, 0, 0, img.width,    img.height,    // source rectangle
-            x, y, w ?? 200, h ?? 200       // destination rectangle
-        );
-        resolve(null);
-    }
-});
+const drawImg = (img:HTMLImageElement) => (x:number, y:number, w:number, h:number) => {
+    ctx.drawImage(
+        img, 0, 0, img.width, img.height,    // source rectangle
+        x, y, w, h       // destination rectangle
+    ); 
+}
+const drawBeach = drawImg(beachImg);
+const drawACloud = drawImg(cloudImg);
+const drawASoldier = drawImg(soldierImg);
+
+// const drawACloud = (x:number, y:number, w?:number, h?:number) => {
+//     const img = cloudImg;
+//     ctx.drawImage(
+//         img, 0, 0, img.width,    img.height,    // source rectangle
+//         x, y, w ?? 200, h ?? 200       // destination rectangle
+//     );
+// }
+
+// const drawASoldier = (x:number, y:number, w?:number, h?:number) => {
+//     const img = soldierImg;
+//     ctx.drawImage(
+//         img, 0, 0, img.width,    img.height,    // source rectangle
+//         x, y, w ?? 200, h ?? 200       // destination rectangle
+//     );
+// }
 
 const drawHeading = () => {
     ctx.fillStyle = "black";
@@ -79,32 +82,37 @@ const drawASkeleton = (skeleton:skeleton, origin:xy, size:number) => {
 const drawADefaultStickFigure = (origin:xy) => drawASkeleton(stickFigureDefault, origin, 80);
 const drawARightArmRaisedStickFigure = (origin:xy) => drawASkeleton(stickFigureRightArmRaised, origin, 80);
 
-//fillAll("green");
-drawBeach();
-const initHeight = 400;
-await drawACloud(1250, initHeight);
-const spacing = 110;
-await drawACloud(1250+spacing, initHeight+spacing);
-await drawACloud(1250+spacing*2, initHeight+spacing*2);
-const baseSoldierX = 550;
-//await drawASoldier(baseSoldierX, initHeight);
-{
-    // draw a pseudo-waving stick figure
-    setInterval(() => {
-        n++;
-        const even = n % 2 === 0;
-        if (even) {
-            drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
-        }
-        else {
-            drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
-        }
-    }, 1000)
-}
-let n = 0;
 
-await drawASoldier(baseSoldierX-spacing, initHeight+spacing);
-await drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2);
-drawHeading();
+
+const render = async () => {
+    drawBeach(0, 0, canvas.width, canvas.height);
+    const initHeight = 400;
+    drawACloud(1250, initHeight, 200, 200);
+    const spacing = 110;
+    drawACloud(1250+spacing, initHeight+spacing, 200, 200);
+    drawACloud(1250+spacing*2, initHeight+spacing*2, 200, 200);
+    const baseSoldierX = 550;
+    //await drawASoldier(baseSoldierX, initHeight);
+    {
+        // draw a pseudo-waving stick figure
+        setInterval(() => {
+            n++;
+            const even = n % 2 === 0;
+            if (even) {
+                drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+            }
+            else {
+                drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+            }
+        }, 1000)
+    }
+    let n = 0;
+    
+    drawASoldier(baseSoldierX-spacing, initHeight+spacing, 200, 200);
+    drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200);
+    drawHeading();
+}
+
+render();
 
 export {}
