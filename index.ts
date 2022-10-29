@@ -1,7 +1,7 @@
 import { MenuContents } from "./types/menuTypes.js";
 import {skeleton, stickFigureDefault, stickFigureRightArmRaised, xy} from "./skeletons.js"
 import {initState} from "./state.js"
-import { getMouseOverMenuEntry } from "./mouseEvents.js";
+import { getMouseOverMenuEntry, onMouseDown } from "./mouseEvents.js";
 import { getTopLeftPositionOfMenu } from "./menuPositioning.js";
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = canvas.clientWidth; // this stupidity hurts
@@ -176,6 +176,9 @@ canvas.addEventListener('mousemove', e => {
     if (menuMouseOverEntry) {
         contents.find(entry => entry.name == menuMouseOverEntry.name)!.highlighted = true; // bad code, checking on name!
     }
+})
+canvas.addEventListener('mousedown', e => {
+    onMouseDown(e.x, e.y, state);
 })
 window.requestAnimationFrame(render);
 
