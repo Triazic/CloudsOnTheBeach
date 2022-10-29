@@ -1,5 +1,4 @@
 import { stickFigureDefault } from "./skeletons.js";
-console.log(stickFigureDefault);
 const canvas = document.getElementById("canvas");
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -48,6 +47,24 @@ const drawHeading = () => {
     ctx.font = "50px verdana";
     ctx.fillText("Clouds on the Beach...", 675, 250);
 };
+const drawASkeleton = (skeleton, origin, size) => {
+    ctx.fillStyle = "black";
+    const [ox, oy] = origin;
+    skeleton.lines.forEach(line => {
+        const { a: [x1, y1], b: [x2, y2] } = line;
+        ctx.beginPath();
+        ctx.moveTo(ox + x1 * size, oy - y1 * size);
+        ctx.lineTo(ox + x2 * size, oy - y2 * size);
+        ctx.stroke();
+    });
+    skeleton.circles.forEach(circle => {
+        const { center: [x1, y1], diameter } = circle;
+        const radius = diameter / 2;
+        ctx.beginPath();
+        ctx.arc(ox + x1 * size, oy + y1 * size, radius, 0, 2 * Math.PI);
+        ctx.stroke();
+    });
+};
 //fillAll("green");
 drawBeach();
 const initHeight = 400;
@@ -59,4 +76,5 @@ const baseSoldierX = 550;
 await drawASoldier(baseSoldierX, initHeight);
 await drawASoldier(baseSoldierX - spacing, initHeight + spacing);
 await drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2);
+drawASkeleton(stickFigureDefault, [baseSoldierX, initHeight - 100], 100);
 drawHeading();
