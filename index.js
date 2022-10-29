@@ -70,7 +70,7 @@ const drawASkeleton = (skeleton, origin, size) => {
 };
 const drawADefaultStickFigure = (origin) => drawASkeleton(stickFigureDefault, origin, 80);
 const drawARightArmRaisedStickFigure = (origin) => drawASkeleton(stickFigureRightArmRaised, origin, 80);
-const render = async () => {
+const render = () => {
     drawBeach(0, 0, canvas.width, canvas.height);
     const initHeight = 400;
     drawACloud(1250, initHeight, 200, 200);
@@ -78,21 +78,7 @@ const render = async () => {
     drawACloud(1250 + spacing, initHeight + spacing, 200, 200);
     drawACloud(1250 + spacing * 2, initHeight + spacing * 2, 200, 200);
     const baseSoldierX = 550;
-    //await drawASoldier(baseSoldierX, initHeight);
-    {
-        // draw a pseudo-waving stick figure
-        setInterval(() => {
-            n++;
-            const even = n % 2 === 0;
-            if (even) {
-                drawARightArmRaisedStickFigure([baseSoldierX + spacing / 2 + 8, initHeight + spacing / 2 + 8]);
-            }
-            else {
-                drawADefaultStickFigure([baseSoldierX + spacing / 2 + 8, initHeight + spacing / 2 + 8]);
-            }
-        }, 1000);
-    }
-    let n = 0;
+    drawADefaultStickFigure([baseSoldierX + spacing / 2 + 8, initHeight + spacing / 2 + 8]);
     drawASoldier(baseSoldierX - spacing, initHeight + spacing, 200, 200);
     drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2, 200, 200);
     drawHeading();
