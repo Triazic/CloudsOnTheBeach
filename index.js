@@ -39,7 +39,6 @@ const drawASoldier = (x, y, w, h, highlighted) => {
         x - w * (m - 1) / 2, y, w * m, h // destination rectangle
         );
         // now draw the highlight
-        console.log(ctx.filter);
         ctx.filter = "brightness(200%)";
         ctx.drawImage(img, 0, 0, img.width, img.height, // source rectangle
         x, y, w, h // destination rectangle
@@ -86,8 +85,8 @@ const drawMenu = (contents, x, y) => {
         drawMenuText(x + 15, textY, name);
     });
 };
-const drawASkeleton = (skeleton, origin, size) => {
-    ctx.fillStyle = "black";
+const drawASkeleton = (skeleton, origin, size, amHighlighted) => {
+    ctx.strokeStyle = amHighlighted ? "red" : "black";
     const [ox, oy] = origin;
     skeleton.lines.forEach(line => {
         const { a: [x1, y1], b: [x2, y2] } = line;
@@ -104,8 +103,8 @@ const drawASkeleton = (skeleton, origin, size) => {
         ctx.stroke();
     });
 };
-const drawADefaultStickFigure = (origin) => drawASkeleton(stickFigureDefault, origin, 80);
-const drawARightArmRaisedStickFigure = (origin) => drawASkeleton(stickFigureRightArmRaised, origin, 80);
+const drawADefaultStickFigure = (origin, amHighlighted) => drawASkeleton(stickFigureDefault, origin, 80, amHighlighted);
+const drawARightArmRaisedStickFigure = (origin, amHighlighted) => drawASkeleton(stickFigureRightArmRaised, origin, 80, amHighlighted);
 const render = () => {
     drawBeach(0, 0, canvas.width, canvas.height);
     const initHeight = 400;
@@ -117,25 +116,27 @@ const render = () => {
         drawACloud(1250 + spacing * i, initHeight + spacing * i, 200, 200);
     });
     const leftUnits = state.units.filter(u => u.side == "left");
+    const highlightedUnit = state.units.find(u => u.id == state.menu.unitId);
     const baseSoldierX = 550;
     const baseStickManX = 615;
     const baseStickManY = 500;
     leftUnits.forEach((unit, i) => {
         if (unit.class != "StickMan" && unit.class != "Soldier")
             throw "expecting only soldiers or stick men on the left for now";
+        const amHighlighted = highlightedUnit.id == unit.id;
         switch (unit.class) {
             case "StickMan":
                 {
                     if (state.stickFigureArmRaised) {
-                        drawARightArmRaisedStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i]);
+                        drawARightArmRaisedStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i], amHighlighted);
                     }
                     else {
-                        drawADefaultStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i]);
+                        drawADefaultStickFigure([baseStickManX - spacing * i, baseStickManY + spacing * i], amHighlighted);
                     }
                 }
                 break;
             case "Soldier": {
-                drawASoldier(baseSoldierX - spacing * i, initHeight + spacing * i, 200, 200);
+                drawASoldier(baseSoldierX - spacing * i, initHeight + spacing * i, 200, 200, amHighlighted);
             }
             default:
                 break;

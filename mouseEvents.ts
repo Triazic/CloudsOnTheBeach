@@ -21,7 +21,6 @@ const incrementMenuUnit = (state:State) => {
     const index = state.units.findIndex(u => u.id == state.menu.unitId);
     if (index == -1) throw "index -1?";
     const unit = state.units[index];
-    console.log(index, unit, state);
     if (!unit) throw "no unit?";
     if (unit.side == "right") throw "not expected unit on the right";
     let nextUnit = state.units[index+1]; // not safe
@@ -36,7 +35,6 @@ export const onMouseDown = (mouseX:number, mouseY:number, state:State) => {
     const contents = state.menu.contents;
     const {x:menuX,y:menuY} = getTopLeftPositionOfMenu(state);
     const menuMouseOverEntry = getMouseOverMenuEntry(mouseX, mouseY, contents, menuX, menuY);
-    console.log(menuMouseOverEntry);
     if (menuMouseOverEntry) {
         // do the thing on the entry.. for now global
         incrementMenuUnit(state);
