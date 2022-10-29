@@ -8,7 +8,7 @@ export const soldierMenuContents = [
 ];
 export const initState = {
     stickFigureArmRaised: false,
-    menu: { unitId: "Soldier3", contents: soldierMenuContents },
+    menu: { unitId: "StickMan1", contents: soldierMenuContents },
     units: [
         { id: "StickMan1", side: "left", class: "StickMan" },
         { id: "Soldier2", side: "left", class: "Soldier" },

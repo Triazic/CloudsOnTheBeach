@@ -2,6 +2,7 @@ import { MenuContents } from "./types/menuTypes.js";
 import {skeleton, stickFigureDefault, stickFigureRightArmRaised, xy} from "./skeletons.js"
 import {initState} from "./state.js"
 import { getMouseOverMenuEntry } from "./mouseEvents.js";
+import { getTopLeftPositionOfMenu } from "./menuPositioning.js";
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -137,7 +138,7 @@ const render = () => {
     const leftUnits = state.units.filter(u => u.side == "left");
     const baseSoldierX = 550;
     const baseStickManX = 615;
-    const baseStickManY = 465;
+    const baseStickManY = 500;
     leftUnits.forEach((unit, i) => {
         if (unit.class != "StickMan" && unit.class != "Soldier") throw "expecting only soldiers or stick men on the left for now";
         switch (unit.class) {
@@ -158,7 +159,8 @@ const render = () => {
     })
 
     drawHeading();
-    drawMenu(state.menu.contents, 450, 605);
+    const {x:menuX, y:menuY} = getTopLeftPositionOfMenu(state)
+    drawMenu(state.menu.contents, menuX, menuY);
 
     window.requestAnimationFrame(render);
 }
@@ -166,10 +168,10 @@ const render = () => {
 let state = initState;
 setInterval(() => state.stickFigureArmRaised = !state.stickFigureArmRaised, 1000);
 
-
 canvas.addEventListener('mousemove', e => {
     const contents = state.menu.contents;
-    const menuMouseOverEntry = getMouseOverMenuEntry(e.x, e.y, contents, 450, 605);
+    const {x:menuX,y:menuY} = getTopLeftPositionOfMenu(state);
+    const menuMouseOverEntry = getMouseOverMenuEntry(e.x, e.y, contents, menuX, menuY);
     contents.forEach(entry => entry.highlighted = false);
     if (menuMouseOverEntry) {
         contents.find(entry => entry.name == menuMouseOverEntry.name)!.highlighted = true; // bad code, checking on name!
