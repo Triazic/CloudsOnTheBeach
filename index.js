@@ -1,4 +1,5 @@
-console.log("hey");
+// import {skeleton, stickFigureDefault} from "./skeletons"
+// console.log(stickFigureDefault);
 const canvas = document.getElementById("canvas");
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
