@@ -76,6 +76,8 @@ const drawASkeleton = (skeleton:skeleton, origin:xy, size:number) => {
     });
 }
 
+const drawADefaultStickFigure = (origin:xy) => drawASkeleton(stickFigureDefault, origin, 80);
+
 //fillAll("green");
 drawBeach();
 const initHeight = 400;
@@ -84,10 +86,10 @@ const spacing = 110;
 await drawACloud(1250+spacing, initHeight+spacing);
 await drawACloud(1250+spacing*2, initHeight+spacing*2);
 const baseSoldierX = 550;
-await drawASoldier(baseSoldierX, initHeight);
+//await drawASoldier(baseSoldierX, initHeight);
+drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8])
 await drawASoldier(baseSoldierX-spacing, initHeight+spacing);
 await drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2);
-drawASkeleton(stickFigureDefault, [baseSoldierX, initHeight-100], 100)
 drawHeading();
 
 export {}
