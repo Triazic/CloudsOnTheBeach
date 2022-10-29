@@ -1,4 +1,4 @@
-import { MenuContents, MenuEntry } from "./menuTypes.js";
+import { MenuContents, MenuEntry } from "./types/menuTypes.js";
 import {skeleton, stickFigureDefault, stickFigureRightArmRaised, xy} from "./skeletons.js"
 import {initState, State} from "./state.js"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -125,20 +125,37 @@ const drawARightArmRaisedStickFigure = (origin:xy) => drawASkeleton(stickFigureR
 const render = () => {
     drawBeach(0, 0, canvas.width, canvas.height);
     const initHeight = 400;
-    drawACloud(1250, initHeight, 200, 200);
     const spacing = 110;
-    drawACloud(1250+spacing, initHeight+spacing, 200, 200);
-    drawACloud(1250+spacing*2, initHeight+spacing*2, 200, 200);
-    const baseSoldierX = 550;
 
-    if (state.stickFigureArmRaised) {
-        drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
-    }
-    else {
-        drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
-    }
-    drawASoldier(baseSoldierX-spacing, initHeight+spacing, 200, 200);
-    drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200, true);
+    const rightUnits = state.units.filter(u => u.side == "right");
+    rightUnits.forEach((unit, i) => {
+        if (unit.class != "Cloud") throw "expecting only clouds on the right for now";
+        drawACloud(1250+spacing*i, initHeight+spacing*i, 200, 200);
+    });
+
+    const leftUnits = state.units.filter(u => u.side == "left");
+    const baseSoldierX = 550;
+    const baseStickManX = 650;
+    const baseStickManY = 450;
+    leftUnits.forEach((unit, i) => {
+        if (unit.class != "StickMan" && unit.class != "Soldier") throw "expecting only soldiers or stick men on the left for now";
+        switch (unit.class) {
+            case "StickMan": {
+                if (state.stickFigureArmRaised) {
+                    drawARightArmRaisedStickFigure([baseStickManX+spacing*i, baseStickManY+spacing*i]);
+                }
+                else {
+                    drawADefaultStickFigure([baseStickManX+spacing*i, baseStickManY+spacing*i]);
+                }
+            } break;
+            case "Soldier": {
+                drawASoldier(baseSoldierX-spacing*i, initHeight+spacing*i, 200, 200);
+            }
+            default:
+                break;
+        }
+    })
+
     drawHeading();
     drawMenu(state.menuContents, 450, 605);
 
@@ -149,7 +166,6 @@ let state = initState;
 setInterval(() => state.stickFigureArmRaised = !state.stickFigureArmRaised, 1000);
 const getMouseOverMenuEntry = (mouseX:number, mouseY:number, menu:MenuContents, menuX:number, menuY:number) => {
     const getBoundsOfEntry = (i:number) => {
-        // ctx.fillRect(x+7.5, textY+5, w-15, heightPerRow);
         const x1 = menuX+7.5;
         const y1 = menuY+5+i*30;
         const x2 = menuX+140-7.5;

@@ -9,4 +9,12 @@ export const soldierMenuContents = [
 export const initState = {
     stickFigureArmRaised: false,
     menuContents: soldierMenuContents,
+    units: [
+        { id: "StickMan1", side: "left", class: "StickMan" },
+        { id: "Soldier2", side: "left", class: "Soldier" },
+        { id: "Soldier3", side: "left", class: "Soldier" },
+        { id: "Cloud1", side: "right", class: "Cloud" },
+        { id: "Cloud2", side: "right", class: "Cloud" },
+        { id: "Cloud3", side: "right", class: "Cloud" },
+    ],
 };
