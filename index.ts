@@ -43,11 +43,14 @@ const drawACloud = drawImg(cloudImg);
 const drawASoldier = (x:number, y:number, w:number, h:number, highlighted?:boolean) => {
     const img = soldierImg;
     if (highlighted) {
-        // draw the original
-        // ctx.drawImage(
-        //     img, 0, 0, img.width, img.height,    // source rectangle
-        //     x, y, w, h       // destination rectangle
-        // ); 
+        // draw the original, fully black
+        ctx.filter = "brightness(0%)";
+        const borderMultiplier = 1.05;
+        const m = borderMultiplier;
+        ctx.drawImage(
+            img, 0, 0, img.width, img.height,    // source rectangle
+            x-w*(m-1)/2, y, w*m, h       // destination rectangle
+        ); 
         // now draw the highlight
         console.log(ctx.filter);
         ctx.filter = "brightness(200%)";
