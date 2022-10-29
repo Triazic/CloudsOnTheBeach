@@ -1,4 +1,4 @@
-import {skeleton, stickFigureDefault, xy} from "./skeletons.js"
+import {skeleton, stickFigureDefault, stickFigureRightArmRaised, xy} from "./skeletons.js"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -77,6 +77,7 @@ const drawASkeleton = (skeleton:skeleton, origin:xy, size:number) => {
 }
 
 const drawADefaultStickFigure = (origin:xy) => drawASkeleton(stickFigureDefault, origin, 80);
+const drawARightArmRaisedStickFigure = (origin:xy) => drawASkeleton(stickFigureRightArmRaised, origin, 80);
 
 //fillAll("green");
 drawBeach();
@@ -87,7 +88,7 @@ await drawACloud(1250+spacing, initHeight+spacing);
 await drawACloud(1250+spacing*2, initHeight+spacing*2);
 const baseSoldierX = 550;
 //await drawASoldier(baseSoldierX, initHeight);
-drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8])
+drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8])
 await drawASoldier(baseSoldierX-spacing, initHeight+spacing);
 await drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2);
 drawHeading();
