@@ -18,7 +18,6 @@ const fillAll = (colour:string) => {
 }
 
 const drawBeach = () => {
-    const {width, height} = getDims();
     const img = new Image();
     img.src = "/Beach.png";
     img.onload = () => {
@@ -29,5 +28,20 @@ const drawBeach = () => {
     }
 }
 
+const drawACloud = (x:number, y:number, w?:number, h?:number) => {
+    const img = new Image();
+    img.src = "/Cloud.png";
+    img.onload = () => {
+        ctx.drawImage(
+            img, 0, 0, img.width,    img.height,    // source rectangle
+            x, y, w ?? 130, h ?? 130       // destination rectangle
+        ); 
+    }
+}
+
 //fillAll("green");
 drawBeach();
+drawACloud(1250, 475);
+const spacing = 110;
+drawACloud(1250+spacing, 475+spacing);
+drawACloud(1250+spacing*2, 475+spacing*2);
