@@ -1,5 +1,5 @@
-// import {skeleton, stickFigureDefault} from "./skeletons"
-// console.log(stickFigureDefault);
+import { stickFigureDefault } from "./skeletons.js";
+console.log(stickFigureDefault);
 const canvas = document.getElementById("canvas");
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -60,4 +60,3 @@ await drawASoldier(baseSoldierX, initHeight);
 await drawASoldier(baseSoldierX - spacing, initHeight + spacing);
 await drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2);
 drawHeading();
-export {};

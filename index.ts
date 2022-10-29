@@ -1,5 +1,5 @@
-// import {skeleton, stickFigureDefault} from "./skeletons"
-// console.log(stickFigureDefault);
+import {skeleton, stickFigureDefault} from "./skeletons.js"
+console.log(stickFigureDefault);
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 canvas.width = canvas.clientWidth; // this stupidity hurts
