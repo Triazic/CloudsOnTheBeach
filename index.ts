@@ -69,9 +69,9 @@ const drawASkeleton = (skeleton:skeleton, origin:xy, size:number) => {
     });
     skeleton.circles.forEach(circle => {
         const {center:[x1,y1], diameter} = circle;
-        const radius = diameter/2;
+        const radius = size*diameter/2;
         ctx.beginPath();
-        ctx.arc(ox+x1*size, oy+y1*size, radius, 0, 2 * Math.PI);
+        ctx.arc(ox+x1*size, oy-y1*size, radius, 0, 2 * Math.PI);
         ctx.stroke();
     });
 }
