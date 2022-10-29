@@ -88,7 +88,21 @@ await drawACloud(1250+spacing, initHeight+spacing);
 await drawACloud(1250+spacing*2, initHeight+spacing*2);
 const baseSoldierX = 550;
 //await drawASoldier(baseSoldierX, initHeight);
-drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8])
+{
+    // draw a pseudo-waving stick figure
+    setInterval(() => {
+        n++;
+        const even = n % 2 === 0;
+        if (even) {
+            drawARightArmRaisedStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+        }
+        else {
+            drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
+        }
+    }, 1000)
+}
+let n = 0;
+
 await drawASoldier(baseSoldierX-spacing, initHeight+spacing);
 await drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2);
 drawHeading();
