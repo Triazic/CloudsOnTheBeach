@@ -45,6 +45,19 @@ const drawHeading = () => {
     ctx.fillText("Clouds on the Beach...", 675, 250);
 }
 
+const drawMenu = () => {
+    const x = 450;
+    const y = 605;
+    const w = 140;
+    const h = w * 1.62;
+    // border
+    ctx.fillStyle = "#6fa8de";
+    ctx.fillRect(x, y, w, h);
+    // interior
+    ctx.fillStyle = "#1D5182";
+    ctx.fillRect(x+5, y+5, w-10, h-10);
+}
+
 const drawASkeleton = (skeleton:skeleton, origin:xy, size:number) => {
     ctx.fillStyle = "black";
     const [ox,oy] = origin;
@@ -85,6 +98,7 @@ const render = () => {
     drawASoldier(baseSoldierX-spacing, initHeight+spacing, 200, 200);
     drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200);
     drawHeading();
+    drawMenu();
 
     window.requestAnimationFrame(render);
 }
