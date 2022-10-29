@@ -35,9 +35,35 @@ const drawImg = (img:HTMLImageElement) => (x:number, y:number, w:number, h:numbe
         x, y, w, h       // destination rectangle
     ); 
 }
+
+
 const drawBeach = drawImg(beachImg);
 const drawACloud = drawImg(cloudImg);
-const drawASoldier = drawImg(soldierImg);
+
+const drawASoldier = (x:number, y:number, w:number, h:number, highlighted?:boolean) => {
+    const img = soldierImg;
+    if (highlighted) {
+        // draw the original
+        // ctx.drawImage(
+        //     img, 0, 0, img.width, img.height,    // source rectangle
+        //     x, y, w, h       // destination rectangle
+        // ); 
+        // now draw the highlight
+        console.log(ctx.filter);
+        ctx.filter = "brightness(200%)";
+        ctx.drawImage(
+            img, 0, 0, img.width, img.height,    // source rectangle
+            x, y, w, h       // destination rectangle
+        ); 
+        ctx.filter = "none";
+    }
+    else {
+        ctx.drawImage(
+            img, 0, 0, img.width, img.height,    // source rectangle
+            x, y, w, h       // destination rectangle
+        ); 
+    }
+}
 
 const drawHeading = () => {
     ctx.fillStyle = "black";
@@ -122,7 +148,7 @@ const render = () => {
         drawADefaultStickFigure([baseSoldierX+spacing/2+8, initHeight+spacing/2+8]);
     }
     drawASoldier(baseSoldierX-spacing, initHeight+spacing, 200, 200);
-    drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200);
+    drawASoldier(baseSoldierX-spacing*2, initHeight+spacing*2, 200, 200, true);
     drawHeading();
     drawMenu();
 
