@@ -121,7 +121,7 @@ const render = () => {
     drawASoldier(baseSoldierX - spacing, initHeight + spacing, 200, 200);
     drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2, 200, 200, true);
     drawHeading();
-    // drawMenu(state.menuContents, 450, 605);
+    drawMenu(state.menuContents, 450, 605);
     window.requestAnimationFrame(render);
 };
 let state = initState;
