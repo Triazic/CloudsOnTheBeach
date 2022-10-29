@@ -1,6 +1,8 @@
 console.log("hey");
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+canvas.width = canvas.clientWidth; // this stupidity hurts
+canvas.height = canvas.clientHeight; // this stupidity hurts
 const ctx = canvas.getContext("2d")!;
 
 const getDims = () => {
@@ -17,7 +19,6 @@ const fillAll = (colour:string) => {
 
 const drawBeach = () => {
     const {width, height} = getDims();
-    console.log(width, height);
     const img = new Image();
     img.src = "/Beach.png";
     img.onload = () => {

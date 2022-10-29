@@ -1,6 +1,8 @@
 "use strict";
 console.log("hey");
 const canvas = document.getElementById("canvas");
+canvas.width = canvas.clientWidth; // this stupidity hurts
+canvas.height = canvas.clientHeight; // this stupidity hurts
 const ctx = canvas.getContext("2d");
 const getDims = () => {
     const width = canvas.clientWidth;
@@ -14,7 +16,6 @@ const fillAll = (colour) => {
 };
 const drawBeach = () => {
     const { width, height } = getDims();
-    console.log(width, height);
     const img = new Image();
     img.src = "/Beach.png";
     img.onload = () => {
