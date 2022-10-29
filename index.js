@@ -82,5 +82,6 @@ const render = () => {
     drawASoldier(baseSoldierX - spacing, initHeight + spacing, 200, 200);
     drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2, 200, 200);
     drawHeading();
+    window.requestAnimationFrame(render);
 };
-render();
+window.requestAnimationFrame(render);
