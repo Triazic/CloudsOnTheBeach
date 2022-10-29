@@ -1,5 +1,6 @@
 import { stickFigureDefault, stickFigureRightArmRaised } from "./skeletons.js";
 import { initState } from "./state.js";
+import { getMouseOverMenuEntry } from "./mouseEvents.js";
 const canvas = document.getElementById("canvas");
 canvas.width = canvas.clientWidth; // this stupidity hurts
 canvas.height = canvas.clientHeight; // this stupidity hurts
@@ -145,20 +146,6 @@ const render = () => {
 };
 let state = initState;
 setInterval(() => state.stickFigureArmRaised = !state.stickFigureArmRaised, 1000);
-const getMouseOverMenuEntry = (mouseX, mouseY, menu, menuX, menuY) => {
-    const getBoundsOfEntry = (i) => {
-        const x1 = menuX + 7.5;
-        const y1 = menuY + 5 + i * 30;
-        const x2 = menuX + 140 - 7.5;
-        const y2 = y1 + 30;
-        return [x1, y1, x2, y2];
-    };
-    const getIfEntryMouseOvered = (i) => {
-        const [x1, y1, x2, y2] = getBoundsOfEntry(i);
-        return mouseX > x1 && mouseX < x2 && mouseY > y1 && mouseY < y2;
-    };
-    return menu.find((entry, i) => getIfEntryMouseOvered(i));
-};
 canvas.addEventListener('mousemove', e => {
     const contents = state.menu.contents;
     const menuMouseOverEntry = getMouseOverMenuEntry(e.x, e.y, contents, 450, 605);
