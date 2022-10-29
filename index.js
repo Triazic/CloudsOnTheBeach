@@ -32,20 +32,6 @@ const drawImg = (img) => (x, y, w, h) => {
 const drawBeach = drawImg(beachImg);
 const drawACloud = drawImg(cloudImg);
 const drawASoldier = drawImg(soldierImg);
-// const drawACloud = (x:number, y:number, w?:number, h?:number) => {
-//     const img = cloudImg;
-//     ctx.drawImage(
-//         img, 0, 0, img.width,    img.height,    // source rectangle
-//         x, y, w ?? 200, h ?? 200       // destination rectangle
-//     );
-// }
-// const drawASoldier = (x:number, y:number, w?:number, h?:number) => {
-//     const img = soldierImg;
-//     ctx.drawImage(
-//         img, 0, 0, img.width,    img.height,    // source rectangle
-//         x, y, w ?? 200, h ?? 200       // destination rectangle
-//     );
-// }
 const drawHeading = () => {
     ctx.fillStyle = "black";
     ctx.font = "50px verdana";
