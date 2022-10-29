@@ -1,3 +1,4 @@
+import { soldierMenuContents } from "./menus.js";
 import { stickFigureDefault, stickFigureRightArmRaised } from "./skeletons.js";
 import { initState } from "./state.js";
 const canvas = document.getElementById("canvas");
@@ -8,11 +9,6 @@ const getDims = () => {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
     return { width, height };
-};
-const fillAll = (colour) => {
-    const { width, height } = getDims();
-    ctx.fillStyle = colour;
-    ctx.fillRect(0, 0, width, height);
 };
 const loadImage = (src) => new Promise((resolve) => {
     const img = new Image();
@@ -65,11 +61,11 @@ const drawMenuText = (x, y, message) => {
     ctx.font = "25px verdana";
     ctx.fillText(message, x, y);
 };
-const drawMenu = () => {
-    const x = 450;
-    const y = 605;
+const drawMenu = (contents, x, y) => {
+    const borderWidth = 5;
+    const heightPerRow = 30;
     const w = 140;
-    const h = w * 1.62 - 20;
+    const h = contents.length * heightPerRow + borderWidth * 2 + 12.5;
     // border
     ctx.fillStyle = "#6fa8de";
     ctx.fillRect(x, y, w, h);
@@ -78,24 +74,16 @@ const drawMenu = () => {
     ctx.fillRect(x + 5, y + 5, w - 10, h - 10);
     // text
     let textY = y;
-    textY += 5;
-    textY += 30;
-    drawMenuText(x + 15, textY, "Retreat");
-    textY += 30;
-    drawMenuText(x + 15, textY, "Submit");
-    textY += 30;
-    drawMenuText(x + 15, textY, "Give Up");
-    // draw selected 'highlight'
-    {
-        ctx.fillStyle = "#6fa8de";
-        ctx.fillRect(x + 7.5, textY + 5, w - 15, 30);
-    }
-    textY += 30;
-    drawMenuText(x + 15, textY, "Despair");
-    textY += 30;
-    drawMenuText(x + 15, textY, "Flee");
-    textY += 30;
-    drawMenuText(x + 15, textY, "Bargain");
+    textY += borderWidth;
+    contents.forEach(({ name, highlighted }) => {
+        // draw selected 'highlight'
+        if (highlighted) {
+            ctx.fillStyle = "#6fa8de";
+            ctx.fillRect(x + 7.5, textY + 5, w - 15, heightPerRow);
+        }
+        textY += heightPerRow;
+        drawMenuText(x + 15, textY, name);
+    });
 };
 const drawASkeleton = (skeleton, origin, size) => {
     ctx.fillStyle = "black";
@@ -134,7 +122,7 @@ const render = () => {
     drawASoldier(baseSoldierX - spacing, initHeight + spacing, 200, 200);
     drawASoldier(baseSoldierX - spacing * 2, initHeight + spacing * 2, 200, 200, true);
     drawHeading();
-    drawMenu();
+    drawMenu(soldierMenuContents, 450, 605);
     window.requestAnimationFrame(render);
 };
 let state = initState;
